@@ -67,8 +67,8 @@ for ii, data in tqdm(enumerate(data_test)):
 
         attr, delta = ig.attribute(x, target=k, return_convergence_delta=True)
 
-        gt_c = c[k].numpy()
-        pred_c = np.round(c_p[k].numpy())
+        gt_c = c.numpy().squeeze()[k]
+        pred_c = np.round(c_p.numpy().squeeze()[k])
         
         fig = plt.figure()
         plt.imshow(x.numpy().squeeze(), cmap='gray')
