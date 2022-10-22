@@ -57,6 +57,7 @@ for ii, data in enumerate(data_test):
 
     fig = plt.figure()
     plt.imshow(x.numpy().squeeze(), cmap='gray')
+    plt.axis('off')
     plt.savefig(f'example_images/img-{str(ii).zfill(3)}-input')
 
     for k, v in concept_dict:
@@ -69,10 +70,9 @@ for ii, data in enumerate(data_test):
         fig = plt.figure()
         plt.imshow(x.numpy().squeeze(), cmap='gray')
         plt.imshow(attr.numpy().squeeze(), alpha=0.7, cmap='hot')
-        plt.savefig(f'example_images/img-{str(ii).zfill(3)}-{v}-pred={pred_c}-gt={gt_c}')
         plt.axis('off')
-
-
+        plt.savefig(f'example_images/img-{str(ii).zfill(3)}-{v}-pred={pred_c}-gt={gt_c}')
+        
     if ii > 10:
         break
 
