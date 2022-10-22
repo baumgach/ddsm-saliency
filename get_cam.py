@@ -39,6 +39,8 @@ def main():
     #hydra.utils.log.info(f"Experiment directory {hydra_dir}")
     # Instantiate datamodule
     hydra.utils.log.info(f"Instantiating <{cfg.data.datamodule._target_}>")
+
+    breakpoint()
     datamodule: pl.LightningDataModule = hydra.utils.instantiate(cfg.data.datamodule)
 
     # Instantiate model
