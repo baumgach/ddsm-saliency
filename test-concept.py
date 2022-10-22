@@ -19,23 +19,21 @@ data_test = CBISDDSM(root_path=data_root, with_concepts=True, split='test')
 
 extractor_net = resnet18(pretrained=True)
 classifier_net = concept_mlp(33, 2)
-model = ConceptBottleneckClassifier(
-    extractor_net=extractor_net,
-    classifier_net=classifier_net,
-    train_mode='joint',
-    hparams=hparams,
-    optim_cfg=optim_cfg,
-    num_classes=2,
-    num_concepts=33,
-)
+# model = ConceptBottleneckClassifier(
+#     extractor_net=extractor_net,
+#     classifier_net=classifier_net,
+#     train_mode='joint',
+#     hparams=hparams,
+#     optim_cfg=optim_cfg,
+#     num_classes=2,
+#     num_concepts=33,
+# )
 optim_cfg = {'optimizer': torch.optim.Adam, 'lr': 0.0001}
 hparams = OmegaConf.create({'lambda_concept': 0.5})
 
 breakpoint()
 model = ConceptBottleneckClassifier.load_from_checkpoint(
     checkpoint, 
-    extractor_net=extractor_net,
-    classifier_net=classifier_net,
     train_mode='joint',
     hparams=hparams,
     optim_cfg=optim_cfg,
