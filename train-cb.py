@@ -27,7 +27,7 @@ data_train = CBISDDSM(root_path=data_root, with_concepts=True)
 data_test = CBISDDSM(root_path=data_root, with_concepts=True, split='test')
 
 optim_cfg = OmegaConf.create(load_yaml('conf/optim/default.yaml'))
-hparams = OmegaConf.create({'lambda_concept', 0.5})
+hparams = OmegaConf.create({'lambda_concept': 0.5})
 
 logger = TensorBoardLogger(
         save_dir="./runs-cb", name=experiment_name, default_hp_metric=False
