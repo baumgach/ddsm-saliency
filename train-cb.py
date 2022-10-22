@@ -44,6 +44,18 @@ logger = TensorBoardLogger(
         save_dir="./runs-cb", name=experiment_name, default_hp_metric=False
     )
 
+checkpoint_callbacks = [
+    ModelCheckpoint(
+        monitor="loss/val",
+        filename="best-loss-{epoch}-{step}",
+    ),
+    ModelCheckpoint(monitor="AUC/val", filename="best-auc-{epoch}-{step}", mode="max"),
+    ModelCheckpoint(
+        monitor="concept_accuracy/val",
+        filename="best-concept-accuracy-{epoch}-{step}",
+    ),
+]
+
 extractor_net = resnet18(pretrained=True)
 classifier_net = concept_mlp(33, 2)
 model = ConceptBottleneckClassifier(
@@ -62,6 +74,7 @@ trainer = pl.Trainer(
     log_every_n_steps=50,
     accelerator="gpu",
     devices=1,
+    callbacks=checkpoint_callbacks,
 )
 trainer.fit(
     model=model, train_dataloaders=train_loader, val_dataloaders=test_loader
