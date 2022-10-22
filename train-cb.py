@@ -1,6 +1,6 @@
 import torch
 import pytorch_lightning as pl
-from datasets import cbis_ddsm
+from datasets.cbis_ddsm import CBISDDSM
 from models import concept_bottleneck_classifier
 import yaml
 from pytorch_lightning.loggers import TensorBoardLogger
@@ -14,8 +14,8 @@ from nets.concept_classifier import concept_mlp
 experiment_name = 'test'
 
 data_root = '/mnt/qb/work/baumgartner/cbaumgartner/CBIS-DDSM'
-data_train = cbis_ddsm(root_path=data_root, with_concepts=True)
-data_test = cbis_ddsm(root_path=data_root, with_concepts=True, split='test')
+data_train = CBISDDSM(root_path=data_root, with_concepts=True)
+data_test = CBISDDSM(root_path=data_root, with_concepts=True, split='test')
 
 optim_cfg = OmegaConf.create(yaml.load('conf/optim/default.yaml'))
 hparams = OmegaConf.create({'lambda_concept', 0.5})
