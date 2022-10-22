@@ -53,8 +53,6 @@ from captum.attr import IntegratedGradients, DeepLift, GuidedGradCam
 for ii, data in tqdm(enumerate(data_test)):
 
     x, c, y = data
-    breakpoint()
-    y = np.argmax(y.detach().numpy())
     x = x.unsqueeze(0)
     c_p = torch.sigmoid(model.extractor_net(x))
     ig = IntegratedGradients(model.extractor_net)
