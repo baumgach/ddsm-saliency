@@ -39,10 +39,17 @@ model = ConceptBottleneckClassifier.load_from_checkpoint(
     num_concepts=33,
 )
 
+# SPICULATED - 32
+# OBSCURED - 28
+# ILL-DEFINED - 22
+
+from captum.attr import IntegratedGradients
 for ii, data in enumerate(data_test):
 
     x, c, y = data
     breakpoint()
     c_p = model.extractor_net(x)
+    ig = IntegratedGradients(model)
+    attr, delta = ig.attribute(x, target=32, return_convergence_delta=True)
 
     print(ii, c, y, c_p)
