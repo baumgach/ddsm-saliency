@@ -66,6 +66,8 @@ for ii, data in tqdm(enumerate(data_test)):
 
         attr, delta = ig.attribute(x, target=k, return_convergence_delta=True)
 
+        breakpoint()
+
         gt_c = c.detach().numpy().squeeze()[k]
         pred_c = np.round(c_p.detach().numpy().squeeze()[k])
         
