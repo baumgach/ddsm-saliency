@@ -13,6 +13,9 @@ from torch.utils.data import DataLoader
 import subprocess
 import matplotlib.pyplot as plt
 
+import numpy as np
+from tqdm import tqdm
+
 checkpoint = '/mnt/qb/work/baumgartner/cbaumgartner/ddsm-saliency/runs-cb/0f5bb7e/version_0/checkpoints/best-auc-epoch=19-step=789.ckpt'
 data_root = '/mnt/qb/work/baumgartner/cbaumgartner/CBIS-DDSM'
 
@@ -47,7 +50,7 @@ model = ConceptBottleneckClassifier.load_from_checkpoint(
 concept_dict = {32: 'spiculated', 28: 'obscured', 22: 'ill-defined'}
 
 from captum.attr import IntegratedGradients
-for ii, data in enumerate(data_test):
+for ii, data in tqdm(enumerate(data_test)):
 
     x, c, y = data
     x = x.unsqueeze(0)
