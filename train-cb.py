@@ -33,7 +33,8 @@ logger = TensorBoardLogger(
         save_dir="./runs-cb", name=experiment_name, default_hp_metric=False
     )
 
-extractor_net = resnet18(weights="IMAGENET1K_V1")
+breakpoint()
+extractor_net = resnet18(pretrained=True)
 classifier_net = concept_mlp(33, 2)
 model = concept_bottleneck_classifier(
     extractor_net=extractor_net,
