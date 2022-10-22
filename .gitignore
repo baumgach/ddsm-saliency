@@ -14,6 +14,7 @@ __pycache__/
 
 # Runs
 /experiments
+/runs-cb
 
 # File types
 *.zip
