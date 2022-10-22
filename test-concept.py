@@ -62,6 +62,7 @@ for ii, data in tqdm(enumerate(data_test)):
     plt.imshow(x.detach().numpy().squeeze(), cmap='gray')
     plt.axis('off')
     plt.savefig(f'example_images/img-{str(ii).zfill(3)}-input.png')
+    fig.tight_layout()
     plt.close()
 
     for k, v in concept_dict.items():
@@ -83,6 +84,7 @@ for ii, data in tqdm(enumerate(data_test)):
             plt.imshow(attr_ig, cmap='hot')
             plt.axis('off')
             plt.savefig(f'example_images/img-{str(ii).zfill(3)}-{v}-pred={pred_c}-gt={gt_c}-ig-malignant={y}.png')
+            fig.tight_layout()
             plt.close()
 
             # attr_dl = np.abs(attr_dl.detach().numpy().squeeze())
