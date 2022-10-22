@@ -31,7 +31,6 @@ classifier_net = concept_mlp(33, 2)
 optim_cfg = {'optimizer': torch.optim.Adam, 'lr': 0.0001}
 hparams = OmegaConf.create({'lambda_concept': 0.5})
 
-breakpoint()
 model = ConceptBottleneckClassifier.load_from_checkpoint(
     checkpoint, 
     train_mode='joint',
@@ -43,6 +42,7 @@ model = ConceptBottleneckClassifier.load_from_checkpoint(
 for ii, data in enumerate(data_test):
 
     x, c, y = data
+    breakpoint()
     c_p = model.extractor_net(x)
 
     print(ii, c, y, c_p)
