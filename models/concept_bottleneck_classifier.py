@@ -19,6 +19,7 @@ class ConceptBottleneckClassifier(pl.LightningModule):
         optim_cfg,
         hparams: DictConfig,
         num_classes,
+        num_concepts,
         use_sigmoid = True,
         *args,
         **kwargs
@@ -39,6 +40,7 @@ class ConceptBottleneckClassifier(pl.LightningModule):
             padding=3,
             bias=False,
         )
+        self.extractor_net.fc = nn.Linear(512, num_concepts)
         self.use_sigmoid = use_sigmoid
 
         train_mode_list = ['joint', 'only_classifier', 'only_extractor', 'joint_no_concepts', 'classifier_from_gt_concepts']

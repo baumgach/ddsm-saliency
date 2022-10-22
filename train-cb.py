@@ -20,8 +20,14 @@ def load_yaml(path):
         except yaml.YAMLError as exc:
             print(exc)
 
+def get_git_revision_short_hash() -> str:
+    return (
+        subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])
+        .decode("ascii")
+        .strip()
+    )
 
-experiment_name = 'test'
+experiment_name = get_git_revision_short_hash()
 
 data_root = '/mnt/qb/work/baumgartner/cbaumgartner/CBIS-DDSM'
 data_train = CBISDDSM(root_path=data_root, with_concepts=True)
@@ -46,6 +52,7 @@ model = ConceptBottleneckClassifier(
     hparams=hparams,
     optim_cfg=optim_cfg,
     num_classes=2,
+    num_concepts=33,
 )
 
 trainer = pl.Trainer(
