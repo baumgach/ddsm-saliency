@@ -67,14 +67,13 @@ for ii, data in tqdm(enumerate(data_test)):
 
     for k, v in concept_dict.items():
 
-        attr_ig, delta = ig.attribute(x, target=k, return_convergence_delta=True)
-        # attr_dl = gc.attribute(x, target=k)
-
         gt_c = c.detach().numpy().squeeze()[k]
         pred_c = np.round(c_p.detach().numpy().squeeze()[k])
         
         if int(pred_c) == gt_c:
 
+            attr_ig, delta = ig.attribute(x, target=k, return_convergence_delta=True)
+            # attr_dl = gc.attribute(x, target=k)
             attr_ig = np.abs(attr_ig.detach().numpy().squeeze())
             # attr_ig = (attr_ig - np.min(attr_ig)) / np.max(attr_ig)
             # attr_ig[attr_ig < 0.95] = 0
