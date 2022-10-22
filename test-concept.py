@@ -55,6 +55,7 @@ for ii, data in tqdm(enumerate(data_test)):
     x, c, y = data
     x = x.unsqueeze(0)
     c_p = torch.sigmoid(model.extractor_net(x))
+    breakpoint()
     ig = IntegratedGradients(model.extractor_net)
 
     fig = plt.figure()
