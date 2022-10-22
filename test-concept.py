@@ -11,6 +11,7 @@ from torchvision.models import resnet18
 from nets.concept_classifier import concept_mlp
 from torch.utils.data import DataLoader
 import subprocess
+import matplotlib.pyplot as plt
 
 checkpoint = '/mnt/qb/work/baumgartner/cbaumgartner/ddsm-saliency/runs-cb/0f5bb7e/version_0/checkpoints/best-auc-epoch=19-step=789.ckpt'
 data_root = '/mnt/qb/work/baumgartner/cbaumgartner/CBIS-DDSM'
@@ -43,14 +44,35 @@ model = ConceptBottleneckClassifier.load_from_checkpoint(
 # OBSCURED - 28
 # ILL-DEFINED - 22
 
+concept_dict = {32: 'spiculated', 28: 'obscured', 22: 'ill-defined'}
+
 from captum.attr import IntegratedGradients
 for ii, data in enumerate(data_test):
 
     x, c, y = data
-    x.unsqueeze(0)
+    x = x.unsqueeze(0)
     breakpoint()
-    c_p = model.extractor_net(x)
-    ig = IntegratedGradients(model)
-    attr, delta = ig.attribute(x, target=32, return_convergence_delta=True)
+    c_p = torch.sigmoid(model.extractor_net(x))
+    ig = IntegratedGradients(model.extractor_net)
 
-    print(ii, c, y, c_p)
+    fig = plt.figure()
+    plt.imshow(x.numpy().squeeze(), cmap='gray')
+    plt.savefig(f'example_images/img-{str(ii).zfill(3)}-input')
+
+    for k, v in concept_dict:
+
+        attr, delta = ig.attribute(x, target=k, return_convergence_delta=True)
+
+        gt_c = c[k].numpy()
+        pred_c = np.round(c_p[k].numpy())
+        
+        fig = plt.figure()
+        plt.imshow(x.numpy().squeeze(), cmap='gray')
+        plt.imshow(attr.numpy().squeeze(), alpha=0.7, cmap='hot')
+        plt.savefig(f'example_images/img-{str(ii).zfill(3)}-{v}-pred={pred_c}-gt={gt_c}')
+        plt.axis('off')
+
+
+    if ii > 10:
+        break
+
