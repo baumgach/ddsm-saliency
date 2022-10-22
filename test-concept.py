@@ -60,7 +60,7 @@ for ii, data in tqdm(enumerate(data_test)):
     fig = plt.figure()
     plt.imshow(x.detach().numpy().squeeze(), cmap='gray')
     plt.axis('off')
-    plt.savefig(f'example_images/img-{str(ii).zfill(3)}-input')
+    plt.savefig(f'example_images/img-{str(ii).zfill(3)}-input.png')
 
     for k, v in concept_dict.items():
 
@@ -73,7 +73,7 @@ for ii, data in tqdm(enumerate(data_test)):
         plt.imshow(x.detach().numpy().squeeze(), cmap='gray')
         plt.imshow(attr.detach().numpy().squeeze(), alpha=0.7, cmap='hot')
         plt.axis('off')
-        plt.savefig(f'example_images/img-{str(ii).zfill(3)}-{v}-pred={pred_c}-gt={gt_c}')
+        plt.savefig(f'example_images/img-{str(ii).zfill(3)}-{v}-pred={pred_c}-gt={gt_c}.png')
         
     if ii > 10:
         break
