@@ -62,6 +62,7 @@ for ii, data in tqdm(enumerate(data_test)):
     plt.imshow(x.detach().numpy().squeeze(), cmap='gray')
     plt.axis('off')
     plt.savefig(f'example_images/img-{str(ii).zfill(3)}-input.png')
+    plt.close()
 
     for k, v in concept_dict.items():
 
@@ -73,13 +74,14 @@ for ii, data in tqdm(enumerate(data_test)):
         
         attr_ig = attr_ig.detach().numpy().squeeze()
         attr_ig = (attr_ig - np.min(attr_ig)) / np.max(attr_ig)
-        attr_ig[attr_ig < 0.8] = 0
+        # attr_ig[attr_ig < 0.95] = 0
 
         fig = plt.figure()
-        plt.imshow(x.detach().numpy().squeeze(), cmap='gray')
-        plt.imshow(attr_ig, alpha=0.7, cmap='hot')
+        # plt.imshow(x.detach().numpy().squeeze(), cmap='gray')
+        plt.imshow(attr_ig, cmap='hot')
         plt.axis('off')
         plt.savefig(f'example_images/img-{str(ii).zfill(3)}-{v}-pred={pred_c}-gt={gt_c}-ig.png')
+        plt.close()
 
         # attr_dl = attr_dl.detach().numpy().squeeze()
         # attr_dl = (attr_dl - np.min(attr_dl)) / np.max(attr_dl)
@@ -91,6 +93,6 @@ for ii, data in tqdm(enumerate(data_test)):
         # plt.axis('off')
         # plt.savefig(f'example_images/img-{str(ii).zfill(3)}-{v}-pred={pred_c}-gt={gt_c}-dl.png')
         
-    if ii > 10:
+    if ii > 5:
         break
 
