@@ -49,7 +49,7 @@ model = ConceptBottleneckClassifier.load_from_checkpoint(
 
 concept_dict = {32: 'spiculated', 28: 'obscured', 22: 'ill-defined'}
 
-from captum.attr import IntegratedGradients, DeepLift, GuidedGradCAM
+from captum.attr import IntegratedGradients, DeepLift, GuidedGradCam
 for ii, data in tqdm(enumerate(data_test)):
 
     x, c, y = data
