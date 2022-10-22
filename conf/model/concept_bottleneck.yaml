@@ -1,0 +1,10 @@
+_target_: models.ConceptBottleneckClassifier
+extractor_net:
+  _target_: torchvision.models.resnet18
+  num_classes: 33
+classifier_net:
+  _target_: nets.concept_classifier.concept_mlp
+  num_concepts: 33
+  num_classes: 2
+hparams:
+

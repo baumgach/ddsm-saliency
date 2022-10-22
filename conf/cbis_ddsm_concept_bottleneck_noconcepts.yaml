@@ -1,0 +1,35 @@
+# metadata specialised for each experiment
+core:
+  version: 0.0.1
+  tags:
+    - maml
+
+data:
+  datamodule:
+    datasets:
+      train:
+        with_concepts: True
+      val:
+        with_concepts: True
+      test:
+        with_concepts: True
+
+model:
+  num_classes: 2
+  train_mode: "joint_no_concepts"
+  use_sigmoid: False
+  hparams:
+    lambda_concept: 1
+
+train:
+  pl_trainer:
+    fast_dev_run: False
+
+
+defaults:
+  - data: cbis_ddsm
+  - model: concept_bottleneck
+  - optim: default
+  - train: fully_supervised
+  - hydra: default
+  - _self_

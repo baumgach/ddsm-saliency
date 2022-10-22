@@ -1,0 +1,23 @@
+# metadata specialised for each experiment
+core:
+  version: 0.0.1
+  tags:
+    - maml
+
+model:
+  net:
+    num_classes: 2
+  num_classes: 2
+
+train:
+  pl_trainer:
+    fast_dev_run: False
+
+
+defaults:
+  - data: cbis_ddsm
+  - model: concept_mlp_classifier
+  - optim: default
+  - train: fully_supervised
+  - hydra: default
+  - _self_

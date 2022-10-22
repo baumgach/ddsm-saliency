@@ -1,0 +1,19 @@
+# metadata specialised for each experiment
+core:
+  version: 0.0.1
+  tags:
+    - maml
+
+model:
+  net:
+    num_classes: 9
+  num_classes: 9
+
+
+defaults:
+  - data: path_mnist
+  - model: classifier
+  - optim: default
+  - train: fully_supervised
+  - hydra: default
+  - _self_

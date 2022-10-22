@@ -1,0 +1,7 @@
+_target_: models.ConceptMLPClassifier
+net:
+  _target_: nets.concept_classifier.concept_mlp
+  num_concepts: 33
+  num_classes: 2
+hparams:
+

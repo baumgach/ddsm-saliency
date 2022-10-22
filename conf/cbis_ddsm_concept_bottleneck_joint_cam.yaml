@@ -1,0 +1,36 @@
+# metadata specialised for each experiment
+core:
+  version: 0.0.1
+  tags:
+    - maml
+
+data:
+  datamodule:
+    datasets:
+      train:
+        with_concepts: True
+      val:
+        with_concepts: True
+      test:
+        with_concepts: True
+
+model:
+  num_classes: 2
+  train_mode: "joint"
+  use_sigmoid: False
+  hparams:
+    lambda_concept: 0.5
+
+train:
+  pl_trainer:
+    fast_dev_run: False
+
+checkpoint: "2022-10-21/02-40-15/lightning_logs/version_0/checkpoints/epoch=499-step=20499.ckpt"
+
+defaults:
+  - data: cbis_ddsm
+  - model: concept_bottleneck
+  - optim: default
+  - train: fully_supervised
+  - hydra: default
+  - _self_
