@@ -51,7 +51,6 @@ for ii, data in enumerate(data_test):
 
     x, c, y = data
     x = x.unsqueeze(0)
-    breakpoint()
     c_p = torch.sigmoid(model.extractor_net(x))
     ig = IntegratedGradients(model.extractor_net)
 
