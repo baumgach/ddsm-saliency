@@ -1,7 +1,7 @@
 import torch
 import pytorch_lightning as pl
 from datasets.cbis_ddsm import CBISDDSM
-from models import concept_bottleneck_classifier
+from models.concept_bottleneck_classifier import ConceptBottleneckClassifier
 import yaml
 from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning.callbacks import ModelCheckpoint
@@ -35,7 +35,7 @@ logger = TensorBoardLogger(
 
 extractor_net = resnet18(pretrained=True)
 classifier_net = concept_mlp(33, 2)
-model = concept_bottleneck_classifier(
+model = ConceptBottleneckClassifier(
     extractor_net=extractor_net,
     classifier_net=classifier_net,
     train_mode='joint',
