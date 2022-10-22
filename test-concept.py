@@ -72,8 +72,8 @@ for ii, data in tqdm(enumerate(data_test)):
         gt_c = c.detach().numpy().squeeze()[k]
         pred_c = np.round(c_p.detach().numpy().squeeze()[k])
         
-        attr_ig = attr_ig.detach().numpy().squeeze()
-        attr_ig = (attr_ig - np.min(attr_ig)) / np.max(attr_ig)
+        attr_ig = np.abs(attr_ig.detach().numpy().squeeze())
+        # attr_ig = (attr_ig - np.min(attr_ig)) / np.max(attr_ig)
         # attr_ig[attr_ig < 0.95] = 0
 
         fig = plt.figure()
