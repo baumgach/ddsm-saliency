@@ -22,7 +22,7 @@ class ConceptBottleneckClassifier(pl.LightningModule):
         use_sigmoid = True,
         optim_cfg={'optimizer': torch.optim.Adam, 'lr': 0.0001},
         extractor_net: torch.nn.Module = resnet18(pretrained=True),
-        classifier_net: torch.nn.Module = concept_mlp,
+        classifier_net: torch.nn.Module = concept_mlp(33, 2),
         *args,
         **kwargs
     ) -> None:
