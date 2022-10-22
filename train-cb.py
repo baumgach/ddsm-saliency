@@ -7,7 +7,7 @@ from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning.callbacks import ModelCheckpoint
 from omegaconf import OmegaConf
 
-from torchvision.models import resnet18, ResNet18_Weights
+from torchvision.models import resnet18
 from nets.concept_classifier import concept_mlp
 
 
