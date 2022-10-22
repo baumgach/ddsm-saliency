@@ -26,7 +26,7 @@ data_root = '/mnt/qb/work/baumgartner/cbaumgartner/CBIS-DDSM'
 data_train = CBISDDSM(root_path=data_root, with_concepts=True)
 data_test = CBISDDSM(root_path=data_root, with_concepts=True, split='test')
 
-optim_cfg = OmegaConf.create(load_yaml('conf/optim/default.yaml'))
+optim_cfg = {'outer_optimizer': torch.optim.Adam, 'lr': 0.0001}
 hparams = OmegaConf.create({'lambda_concept': 0.5})
 
 logger = TensorBoardLogger(

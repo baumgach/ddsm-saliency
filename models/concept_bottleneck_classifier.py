@@ -143,13 +143,5 @@ class ConceptBottleneckClassifier(pl.LightningModule):
         self,
     ) -> Union[Optimizer, Tuple[Sequence[Optimizer], Sequence[Any]]]:
 
-        breakpoint()
-        outer_optimizer = self.optim_cfg.outer_optimizer(params=self.parameters())
-
-        if self.optim_cfg.use_lr_scheduler:
-            scheduler = hydra.utils.instantiate(
-                self.optim_cfg.lr_scheduler, optimizer=outer_optimizer
-            )
-            return [outer_optimizer], [scheduler]
-
+        outer_optimizer = self.optim_cfg['optimizer'](params=self.parameters(), lr=self.optim_cfg['lr'])
         return outer_optimizer
