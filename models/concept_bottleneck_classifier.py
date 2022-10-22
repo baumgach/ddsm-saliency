@@ -16,11 +16,11 @@ class ConceptBottleneckClassifier(pl.LightningModule):
     def __init__(
         self,
         train_mode,
-        optim_cfg,
         hparams: DictConfig,
         num_classes,
         num_concepts,
         use_sigmoid = True,
+        optim_cfg={'optimizer': torch.optim.Adam, 'lr': 0.0001},
         extractor_net: torch.nn.Module = resnet18,
         classifier_net: torch.nn.Module = concept_mlp,
         *args,
