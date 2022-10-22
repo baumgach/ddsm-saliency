@@ -56,7 +56,7 @@ for ii, data in tqdm(enumerate(data_test)):
     x = x.unsqueeze(0)
     c_p = torch.sigmoid(model.extractor_net(x))
     ig = IntegratedGradients(model.extractor_net)
-    gc = GuidedGradCam(model.extractor_net)
+    gc = GuidedGradCam(model.extractor_net, model.extractor_net.fc)
 
     fig = plt.figure()
     plt.imshow(x.detach().numpy().squeeze(), cmap='gray')
