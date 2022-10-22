@@ -17,7 +17,7 @@ data_root = '/mnt/qb/work/baumgartner/cbaumgartner/CBIS-DDSM'
 
 data_test = CBISDDSM(root_path=data_root, with_concepts=True, split='test')
 
-model = ModelClass.load_from_checkpoint(checkpoint)
+model = ConceptBottleneckClassifier.load_from_checkpoint(checkpoint)
 
 for ii, data in enumerate(data_test):
 
