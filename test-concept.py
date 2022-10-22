@@ -47,6 +47,7 @@ from captum.attr import IntegratedGradients
 for ii, data in enumerate(data_test):
 
     x, c, y = data
+    x.unsqueeze(0)
     breakpoint()
     c_p = model.extractor_net(x)
     ig = IntegratedGradients(model)
