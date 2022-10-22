@@ -9,6 +9,7 @@ from omegaconf import OmegaConf
 
 from torchvision.models import resnet18
 from nets.concept_classifier import concept_mlp
+from torch.utils.data import DataLoader
 
 def load_yaml(path):
 
@@ -25,6 +26,9 @@ experiment_name = 'test'
 data_root = '/mnt/qb/work/baumgartner/cbaumgartner/CBIS-DDSM'
 data_train = CBISDDSM(root_path=data_root, with_concepts=True)
 data_test = CBISDDSM(root_path=data_root, with_concepts=True, split='test')
+
+train_loader = DataLoader(data_train, batch_size=32, drop_last=True)
+test_loader = DataLoader(data_test, batch_size=32, drop_last=True)
 
 optim_cfg = {'optimizer': torch.optim.Adam, 'lr': 0.0001}
 hparams = OmegaConf.create({'lambda_concept': 0.5})
@@ -52,5 +56,5 @@ trainer = pl.Trainer(
     devices=1,
 )
 trainer.fit(
-    model=model, train_dataloaders=data_train, val_dataloaders=data_test
+    model=model, train_dataloaders=train_loader, val_dataloaders=test_loader
 )
