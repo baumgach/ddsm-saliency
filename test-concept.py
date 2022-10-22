@@ -59,7 +59,7 @@ for ii, data in enumerate(data_test):
     plt.axis('off')
     plt.savefig(f'example_images/img-{str(ii).zfill(3)}-input')
 
-    for k, v in concept_dict:
+    for k, v in concept_dict.items():
 
         attr, delta = ig.attribute(x, target=k, return_convergence_delta=True)
 
