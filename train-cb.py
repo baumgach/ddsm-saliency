@@ -10,6 +10,7 @@ from omegaconf import OmegaConf
 from torchvision.models import resnet18
 from nets.concept_classifier import concept_mlp
 from torch.utils.data import DataLoader
+import subprocess
 
 def load_yaml(path):
 
