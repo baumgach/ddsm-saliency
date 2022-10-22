@@ -55,11 +55,10 @@ for ii, data in tqdm(enumerate(data_test)):
     x, c, y = data
     x = x.unsqueeze(0)
     c_p = torch.sigmoid(model.extractor_net(x))
-    breakpoint()
     ig = IntegratedGradients(model.extractor_net)
 
     fig = plt.figure()
-    plt.imshow(x.numpy().squeeze(), cmap='gray')
+    plt.imshow(x.detach().numpy().squeeze(), cmap='gray')
     plt.axis('off')
     plt.savefig(f'example_images/img-{str(ii).zfill(3)}-input')
 
@@ -67,12 +66,12 @@ for ii, data in tqdm(enumerate(data_test)):
 
         attr, delta = ig.attribute(x, target=k, return_convergence_delta=True)
 
-        gt_c = c.numpy().squeeze()[k]
-        pred_c = np.round(c_p.numpy().squeeze()[k])
+        gt_c = c.detach().numpy().squeeze()[k]
+        pred_c = np.round(c_p.detach().numpy().squeeze()[k])
         
         fig = plt.figure()
-        plt.imshow(x.numpy().squeeze(), cmap='gray')
-        plt.imshow(attr.numpy().squeeze(), alpha=0.7, cmap='hot')
+        plt.imshow(x.detach().numpy().squeeze(), cmap='gray')
+        plt.imshow(attr.detach().numpy().squeeze(), alpha=0.7, cmap='hot')
         plt.axis('off')
         plt.savefig(f'example_images/img-{str(ii).zfill(3)}-{v}-pred={pred_c}-gt={gt_c}')
         
