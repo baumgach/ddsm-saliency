@@ -17,7 +17,28 @@ data_root = '/mnt/qb/work/baumgartner/cbaumgartner/CBIS-DDSM'
 
 data_test = CBISDDSM(root_path=data_root, with_concepts=True, split='test')
 
-model = ConceptBottleneckClassifier.load_from_checkpoint(checkpoint)
+extractor_net = resnet18(pretrained=True)
+classifier_net = concept_mlp(33, 2)
+# model = ConceptBottleneckClassifier(
+#     extractor_net=extractor_net,
+#     classifier_net=classifier_net,
+#     train_mode='joint',
+#     hparams=hparams,
+#     optim_cfg=optim_cfg,
+#     num_classes=2,
+#     num_concepts=33,
+# )
+
+model = ConceptBottleneckClassifier.load_from_checkpoint(
+    checkpoint, 
+    extractor_net=extractor_net,
+    classifier_net=classifier_net,
+    train_mode='joint',
+    hparams=hparams,
+    optim_cfg=optim_cfg,
+    num_classes=2,
+    num_concepts=33,
+)
 
 for ii, data in enumerate(data_test):
 
