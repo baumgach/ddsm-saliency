@@ -36,7 +36,6 @@ model = ConceptBottleneckClassifier.load_from_checkpoint(
     checkpoint, 
     train_mode='joint',
     hparams=hparams,
-    optim_cfg=optim_cfg,
     num_classes=2,
     num_concepts=33,
 )
