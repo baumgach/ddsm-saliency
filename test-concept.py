@@ -28,7 +28,8 @@ classifier_net = concept_mlp(33, 2)
 #     num_classes=2,
 #     num_concepts=33,
 # )
-
+optim_cfg = {'optimizer': torch.optim.Adam, 'lr': 0.0001}
+hparams = OmegaConf.create({'lambda_concept': 0.5})
 model = ConceptBottleneckClassifier.load_from_checkpoint(
     checkpoint, 
     extractor_net=extractor_net,
