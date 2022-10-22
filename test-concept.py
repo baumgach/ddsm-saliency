@@ -49,14 +49,16 @@ model = ConceptBottleneckClassifier.load_from_checkpoint(
 
 concept_dict = {32: 'spiculated', 28: 'obscured', 22: 'ill-defined'}
 
-from captum.attr import IntegratedGradients, DeepLift
+from captum.attr import IntegratedGradients, DeepLift, GuidedGradCAM
 for ii, data in tqdm(enumerate(data_test)):
 
     x, c, y = data
+    breakpoint()
+    y = np.argmax(y.detach().numpy())
     x = x.unsqueeze(0)
     c_p = torch.sigmoid(model.extractor_net(x))
     ig = IntegratedGradients(model.extractor_net)
-    dl = DeepLift(model.extractor_net)
+    gc = GuidedGradCAM(model.extractor_net)
 
     fig = plt.figure()
     plt.imshow(x.detach().numpy().squeeze(), cmap='gray')
@@ -67,32 +69,34 @@ for ii, data in tqdm(enumerate(data_test)):
     for k, v in concept_dict.items():
 
         attr_ig, delta = ig.attribute(x, target=k, return_convergence_delta=True)
-        # attr_dl, delta = dl.attribute(x, target=k, return_convergence_delta=True)
+        attr_dl, delta = gc.attribute(x, target=k, return_convergence_delta=True)
 
         gt_c = c.detach().numpy().squeeze()[k]
         pred_c = np.round(c_p.detach().numpy().squeeze()[k])
         
-        attr_ig = np.abs(attr_ig.detach().numpy().squeeze())
-        # attr_ig = (attr_ig - np.min(attr_ig)) / np.max(attr_ig)
-        # attr_ig[attr_ig < 0.95] = 0
+        if int(pred_c) == gt_c:
 
-        fig = plt.figure()
-        # plt.imshow(x.detach().numpy().squeeze(), cmap='gray')
-        plt.imshow(attr_ig, cmap='hot')
-        plt.axis('off')
-        plt.savefig(f'example_images/img-{str(ii).zfill(3)}-{v}-pred={pred_c}-gt={gt_c}-ig.png')
-        plt.close()
+            attr_ig = np.abs(attr_ig.detach().numpy().squeeze())
+            # attr_ig = (attr_ig - np.min(attr_ig)) / np.max(attr_ig)
+            # attr_ig[attr_ig < 0.95] = 0
 
-        # attr_dl = attr_dl.detach().numpy().squeeze()
-        # attr_dl = (attr_dl - np.min(attr_dl)) / np.max(attr_dl)
-        # attr_dl[attr_dl < 0.8] = 0
+            fig = plt.figure()
+            # plt.imshow(x.detach().numpy().squeeze(), cmap='gray')
+            plt.imshow(attr_ig, cmap='hot')
+            plt.axis('off')
+            plt.savefig(f'example_images/img-{str(ii).zfill(3)}-{v}-pred={pred_c}-gt={gt_c}-ig-malignant={y}.png')
+            plt.close()
 
-        # fig = plt.figure()
-        # plt.imshow(x.detach().numpy().squeeze(), cmap='gray')
-        # plt.imshow(attr_dl, alpha=0.7, cmap='hot')
-        # plt.axis('off')
-        # plt.savefig(f'example_images/img-{str(ii).zfill(3)}-{v}-pred={pred_c}-gt={gt_c}-dl.png')
+            attr_dl = np.abs(attr_dl.detach().numpy().squeeze())
+            # attr_dl = (attr_dl - np.min(attr_dl)) / np.max(attr_dl)
+            # attr_dl[attr_dl < 0.8] = 0
+
+            fig = plt.figure()
+            plt.imshow(x.detach().numpy().squeeze(), cmap='gray')
+            plt.imshow(attr_dl, alpha=0.7, cmap='hot')
+            plt.axis('off')
+            plt.savefig(f'example_images/img-{str(ii).zfill(3)}-{v}-pred={pred_c}-gt={gt_c}-gc-malignant={y}.png')
         
-    if ii > 5:
+    if ii > 30:
         break
 
