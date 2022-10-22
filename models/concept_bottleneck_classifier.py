@@ -15,14 +15,14 @@ from nets.concept_classifier import concept_mlp
 class ConceptBottleneckClassifier(pl.LightningModule):
     def __init__(
         self,
-        extractor_net: torch.nn.Module = resnet18,
-        classifier_net: torch.nn.Module = concept_mlp,
         train_mode,
         optim_cfg,
         hparams: DictConfig,
         num_classes,
         num_concepts,
         use_sigmoid = True,
+        extractor_net: torch.nn.Module = resnet18,
+        classifier_net: torch.nn.Module = concept_mlp,
         *args,
         **kwargs
     ) -> None:
